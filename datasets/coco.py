@@ -21,6 +21,7 @@ from pycocotools import mask as coco_mask
 from .torchvision_datasets import CocoDetection as TvCocoDetection
 from util.misc import get_local_rank, get_local_size
 import datasets.transforms as T
+import random
 
 
 class CocoDetection(TvCocoDetection):
@@ -32,6 +33,7 @@ class CocoDetection(TvCocoDetection):
 
     def __getitem__(self, idx):
         img, target = super(CocoDetection, self).__getitem__(idx)
+        target = random.choices(target, k=min(len(target), random.randint(4, 8)))
         image_id = self.ids[idx]
         target = {'image_id': image_id, 'annotations': target}
         img, target = self.prepare(img, target)
