@@ -33,7 +33,7 @@ class CocoDetection(TvCocoDetection):
 
     def __getitem__(self, idx):
         img, target = super(CocoDetection, self).__getitem__(idx)
-        target = random.choices(target, k=min(len(target), random.randint(4, 8)))
+        target = random.sample(target, k=min(len(target), random.randint(4, 8)))
         image_id = self.ids[idx]
         target = {'image_id': image_id, 'annotations': target}
         img, target = self.prepare(img, target)
